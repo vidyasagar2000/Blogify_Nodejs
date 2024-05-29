@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./partials/head") %>
+    <title>Blog Page</title>
+  </head>
+  <body>
+    <%- include("./partials/nav") %>
+    <div class="container mt-4">
+      <h1><%= blog.title %></h1>
+      <img
+        src="https://tse1.mm.bing.net/th?id=OIP.PA_USRL68UjTfF0kRo5ImQHaEo&pid=Api&P=0&h=180"
+        alt="Image"
+      />
+      <img src="<%= blog.coverImageURL %>" alt="Image" />
+      <pre><%= blog.body %></pre>
+    </div>
+    <div>
+      <img
+        src="<%= blog.createdBy.profileImageURL %>"
+        width="100px"
+        alt="profileImage"
+      />
+      <%= blog.createdBy.fullName %>
+    </div>
+    <div class="container mt-4">
+      <img
+        src="<%= blog.createdBy.profileImageURL %>"
+        width="50px"
+        alt="profile Image"
+      />
+      <%= blog.createdBy.fullName %>
+    </div>
+
+    <div class="container mt-3">
+      <h1>Comments (<%= comments.length %>)</h1>
+      <% if(locals.user) { %>
+      <form action="/blog/comment/<%= blog._id %>" method="post">
+        <div class="mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Your Comment..."
+            id="content"
+            name="content"
+          />
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-primary">Add Comment</button>
+        </div>
+      </form>
+      <% } %> <% for (let comment of comments) { %>
+      <div class="card">
+        <img
+          class=""
+          src="../<%= comment.createdBy.profileImageURL %>"
+          alt="CoverImage"
+        />
+        <h6><%= comment.createdBy.fullName %></h6>
+        <pre><%= comment.content %></pre>
+      </div>
+      <% } %>
+    </div>
+    <%- include("./partials/scripts") %>
+  </body>
+</html>
